@@ -5,4 +5,5 @@
 export const environment = {
   production: false,
   heroCardsUrl: 'https://localhost:44377/api/HeroCards',
+  heroTrainerUrl: 'https://localhost:44377/api/HeroTrainers'
 };

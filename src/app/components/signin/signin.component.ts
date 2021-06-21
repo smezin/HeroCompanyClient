@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HeroCard } from 'src/heroCard';
-import { HeroService } from '../hero.service';
+import { HeroCard } from 'src/app/entities/heroCard';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signin',
@@ -12,16 +12,14 @@ export class SigninComponent implements OnInit {
   @Input() username: string;
   @Input() password: string;
   @Input() rememberMe: boolean = true;
-  heroes : HeroCard[];
-  constructor(private heroService: HeroService) { }
+  isLoading: boolean = false;
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.heroService.getHeroCards().subscribe(hero => console.log(hero));
+  
   }
-  onSubmit():void {
-    console.log(this.username, this.password, this.rememberMe);
-    this.password = "";
-
+  onSubmit():void {   
+   
   }
 
 }
