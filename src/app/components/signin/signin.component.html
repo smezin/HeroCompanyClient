@@ -6,6 +6,7 @@
                     <app-loading-spinner></app-loading-spinner>
                 </div>
                 <form #signinForm="ngForm" 
+                (ngSubmit)="onSubmit(signinForm)" 
                 *ngIf="!isLoading"
                 action="" method="" 
                 class="row g-3">
@@ -42,7 +43,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button (click)="onSubmit()" [disabled]="!signinForm.valid" class="btn btn-dark float-end">Login</button>
+                        <button [disabled]="!signinForm.valid" class="btn btn-dark float-end">Login</button>
                     </div>
                 </form>
                 <hr class="mt-4">

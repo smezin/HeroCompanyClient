@@ -1,7 +1,7 @@
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,6 +13,7 @@ import { HeroCardsComponent } from './components/hero-cards/hero-cards.component
 import { TrainerDetailsComponent } from './components/trainer-details/trainer-details.component';
 import { HandleError } from './services/handle-error.service';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,16 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [{provide: ErrorHandler, useClass: HandleError}],
+  providers: [
+    {
+      provide: ErrorHandler, 
+      useClass: HandleError
+    }, 
+    {
+    provide : HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi   : true,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

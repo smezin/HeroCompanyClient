@@ -15,8 +15,8 @@ export class TrainerDetailsComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(user => {
-      this.name = user.name;
-      this.id = user.id;
+      this.name = user ? user.name : "--";
+      this.id = user ? user.id : "--";
     });
   }
   ngOnDestroy(): void {

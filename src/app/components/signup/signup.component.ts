@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service'
 
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -13,8 +12,8 @@ export class SignupComponent implements OnInit {
 
   @Input() username: string;
   @Input() password: string;
-  @Input() rePassword: string;
   @Input() rememberMe: boolean = true;
+  @Input() rePassword: string;
   isLoading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HeroCard } from 'src/app/entities/heroCard';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,14 +13,23 @@ export class SigninComponent implements OnInit {
   @Input() username: string;
   @Input() password: string;
   @Input() rememberMe: boolean = true;
-  isLoading: boolean = false;
-  constructor(private authService: AuthService) { }
-
-  ngOnInit(): void {
   
-  }
-  onSubmit():void {   
-   
-  }
+  isLoading: boolean = false;
 
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {  
+  }
+  onSubmit(form: NgForm): void {
+    if (!form.valid){
+      return;
+    }
+    const name = form.value.username;
+    const password = form.value.password;
+    this.isLoading = true;
+    this.authService.login(name, password).subscribe(resData => {
+      this.isLoading = false;
+      this.router.navigate(['/myCards']);
+    });
+  }
 }
