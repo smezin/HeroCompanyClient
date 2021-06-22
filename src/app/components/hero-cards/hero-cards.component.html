@@ -8,10 +8,11 @@
         <div class="card mb-2">
           <div class="card-body">
             <h5 class="card-title">Hero: {{heroCard.name}}</h5>
-            <h6>{{heroCard.name}} is attacker</h6>
-            <p class="card-text">starting power: 10.0 current power: 50.0</p>
-            <p class="card-text">suit colors: </p>
-            <a href="#" class="btn btn-primary">Train {{heroCard.name}}</a>
+            <p class="card-text">{{heroCard.name}} is {{heroCard.ability}}</p>
+            <p class="card-text">starting power: {{heroCard.startingPower}} </p>
+            <p class="card-text">current power: {{heroCard.currentPower}}</p>
+            <p class="card-text">suit colors: <span style="color: {{heroCard.suitColors}}">&#x25A0;</span> </p>
+            <button (click)="onTrainHero()" class="btn btn-primary">Train {{heroCard.name}}</button>
           </div>
         </div>
       </div>

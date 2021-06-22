@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { catchError, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { User } from '../entities/user.model';
 import { HandleError } from './handle-error.service';
@@ -41,14 +41,13 @@ export class AuthService {
     return this.http.post<AuthResponseData>(`${this.heroTrainrUrl}/login`, {
       name: name,
       Password: password
-    }).pipe(
+    }).pipe(      
       tap(resData => {
         this.handleAuthentication(
           resData.name, 
           resData.id,           
           resData.token
         );
-        console.log(resData);
       })
     )    
   }

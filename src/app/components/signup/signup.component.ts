@@ -30,6 +30,10 @@ export class SignupComponent implements OnInit {
     this.authService.signup(name, password).subscribe(resData => {
       this.isLoading = false;
       this.router.navigate(['/myCards']);
+    },
+    error => {
+      console.log("error:", error);
+      this.isLoading = false;
     });
     //form.reset;
   }

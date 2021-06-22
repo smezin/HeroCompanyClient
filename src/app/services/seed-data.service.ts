@@ -5,6 +5,7 @@ import { HeroTrainer } from '../entities/heroTrainer';
 import { Guid } from "guid-typescript";
 import { HeroCard } from '../entities/heroCard';
 import { Observable } from 'rxjs';
+import { ability } from '../entities/ability';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,9 @@ export class SeedDataService {
     myTrainerId: this.id,
     startingPower: 10,
     currentPower: 20,
-    trainingSince: new Date()
+    trainingSince: new Date(),
+    ability: ability.Attacker,
+    suitColors: '#EB0A77'
   }
   heroCard2: HeroCard = {
     name: 'two',
@@ -37,7 +40,9 @@ export class SeedDataService {
     myTrainerId: this.id,
     startingPower: 20,
     currentPower: 30,
-    trainingSince: new Date()
+    trainingSince: new Date(),
+    ability: ability.Defender,
+    suitColors: '#00A999'
   }
   heroCard3: HeroCard = {
     name: 'three',
@@ -45,7 +50,9 @@ export class SeedDataService {
     myTrainerId: this.id,
     startingPower: 20,
     currentPower: 30,
-    trainingSince: new Date()
+    trainingSince: new Date(),
+    ability: ability.Defender,
+    suitColors: '#2400A2'
   }
   heroCards: HeroCard[] = [
     this.heroCard1, this.heroCard2, this.heroCard3

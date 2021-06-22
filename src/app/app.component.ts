@@ -16,13 +16,7 @@ export class AppComponent implements OnInit
   constructor (private seedDataService: SeedDataService, private heroService: HeroService) {}
 
   ngOnInit(): void {
-    this.heroService.getHeroCards()
-      .subscribe(heroCards => {
-        this.heroService.setHeroCards(heroCards);
-        if (this.heroService.heroCards.length === 0) {
-          this.seedDataService.seedHeroCards();
-        }
-    } );
+    this.seedDataService.seedHeroCards();
     //this.seedDataService.seedHeroTrainer();    
   }
 }

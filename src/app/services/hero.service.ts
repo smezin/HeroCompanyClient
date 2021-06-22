@@ -36,4 +36,7 @@ export class HeroService
   setHeroCards(heroCards: HeroCard[]): void {
     this.heroCards = heroCards
   }  
+  trainHero (heroName: string) : void {
+    
+  }
 }

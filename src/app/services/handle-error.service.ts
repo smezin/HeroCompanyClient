@@ -10,5 +10,6 @@ export class HandleError implements ErrorHandler {
   handleError(error: any) : void {  
     //add some error handling logic
     console.error('OY! An error occurred:', error);  
+    return;
  }  
 }  

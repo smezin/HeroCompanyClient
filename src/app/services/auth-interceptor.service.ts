@@ -10,7 +10,6 @@ export class AuthInterceptorService implements HttpInterceptor{
 
   constructor( private authService: AuthService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log("----------", this.authService.user.value)
     req = req.clone({
       setHeaders: {
         'Content-Type' : 'application/json; charset=utf-8',

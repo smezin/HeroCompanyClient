@@ -30,6 +30,11 @@ export class SigninComponent implements OnInit {
     this.authService.login(name, password).subscribe(resData => {
       this.isLoading = false;
       this.router.navigate(['/myCards']);
-    });
+    },
+    error => {
+      console.log("error:", error);
+      this.isLoading = false;
+    }
+    );
   }
 }
