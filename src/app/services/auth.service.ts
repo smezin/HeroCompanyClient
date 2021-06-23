@@ -16,8 +16,7 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
-  
+  user = new BehaviorSubject<User>(null);  
   
   constructor(private http: HttpClient, private handleErrorService: HandleError) { }
   private heroTrainrUrl = environment.heroTrainerUrl;

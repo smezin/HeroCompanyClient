@@ -6,13 +6,14 @@ import { Guid } from "guid-typescript";
 import { HeroCard } from '../entities/heroCard';
 import { Observable } from 'rxjs';
 import { ability } from '../entities/ability';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeedDataService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   private heroTrainerUrl = environment.heroTrainerUrl;  
   private heroCardsUrls = environment.heroCardsUrl;
@@ -22,7 +23,8 @@ export class SeedDataService {
   };
   heroTrainer: HeroTrainer = {
     name: 'Willie',
-    id: this.id
+    id: this.id,
+    password: 'popoXima1!'
   }  
   heroCard1: HeroCard = {
     name: 'one',
@@ -58,12 +60,10 @@ export class SeedDataService {
     this.heroCard1, this.heroCard2, this.heroCard3
   ];
   
-  seedHeroTrainer (): HeroTrainer
+  seedHeroTrainer (): any
   {    
-    var heroTrainer: HeroTrainer;
-    this.http.post<HeroTrainer>(this.heroTrainerUrl, this.heroTrainer, this.httpOptions)
-      .subscribe(ht => heroTrainer = ht);
-    return heroTrainer;
+    console.log('seeding trainer - ',this.heroTrainer.name, this.heroTrainer.password)
+    this.authService.signup(this.heroTrainer.name, this.heroTrainer.password).subscribe(t => console.log(t));
   }
   seedHeroCard (heroCard: HeroCard): Observable<HeroCard> 
   {

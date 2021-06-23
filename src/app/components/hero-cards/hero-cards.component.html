@@ -4,7 +4,7 @@
   </div>
   <div class="col">
     <div class="position-relative pb-5 mx-3">
-      <div *ngFor="let heroCard of heroService.heroCards">    
+      <div *ngFor="let heroCard of heroCardsDalService.heroCards">    
         <div class="card mb-2">
           <div class="card-body">
             <h5 class="card-title">Hero: {{heroCard.name}}</h5>
@@ -12,7 +12,7 @@
             <p class="card-text">starting power: {{heroCard.startingPower}} </p>
             <p class="card-text">current power: {{heroCard.currentPower}}</p>
             <p class="card-text">suit colors: <span style="color: {{heroCard.suitColors}}">&#x25A0;</span> </p>
-            <button (click)="onTrainHero()" class="btn btn-primary">Train {{heroCard.name}}</button>
+            <button (click)="onTrainHero(heroCard.id)" class="btn btn-primary">Train {{heroCard.name}}</button>
           </div>
         </div>
       </div>

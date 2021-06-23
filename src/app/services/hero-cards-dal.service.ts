@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class HeroService 
+export class HeroCardsDalService 
 {
   heroCards: HeroCard[] = [];
   TrainerName: string;
@@ -26,17 +26,21 @@ export class HeroService
 
   private heroCardsUrl = environment.heroCardsUrl;
   
-  
-  getHeroCards() : Observable<HeroCard[]>   {   
-    this.authService.user.pipe(take(1)).subscribe(user => {
-
-    });
-    return this.http.get<HeroCard[]>(`${this.heroCardsUrl}/${this.TraindId}`);
-  }  
+  updateHeroCard (trainerId: string, updatedHeroCard: HeroCard) : Observable<HeroCard> {
+    console.log('--->',trainerId);
+    return this.http.put<HeroCard>(`${this.heroCardsUrl}/${trainerId}`, updatedHeroCard);
+  }
+  getHeroCardsByTrainerId() : Observable<HeroCard[]>   {   
+    return this.http.get<HeroCard[]>(`${this.heroCardsUrl}/byTrainerId/${this.TraindId}`);
+  }    
+  getHeroCardByName (heroName: string) : Observable<HeroCard> {
+    return this.http.get<HeroCard>(`${this.heroCardsUrl}/ByHeroName/${heroName}`);
+  }
+  getHeroCardById (heroName: string) : Observable<HeroCard> {
+    return this.http.get<HeroCard>(`${this.heroCardsUrl}/ByHeroId/${heroName}`);
+  }
   setHeroCards(heroCards: HeroCard[]): void {
     this.heroCards = heroCards
   }  
-  trainHero (heroName: string) : void {
-    
-  }
+  
 }
