@@ -14,9 +14,6 @@ import { AuthService } from './auth.service';
 export class HeroCardsDalService 
 {
   heroCards: HeroCard[] = [];
-  TrainerName: string;
-  TraindId: string = '7d21479a-e2b9-b545-7031-03aec9c8f7bb';
-  token: string;
   
   constructor(
     private http: HttpClient, 
@@ -27,11 +24,10 @@ export class HeroCardsDalService
   private heroCardsUrl = environment.heroCardsUrl;
   
   updateHeroCard (trainerId: string, updatedHeroCard: HeroCard) : Observable<HeroCard> {
-    console.log('--->',trainerId);
     return this.http.put<HeroCard>(`${this.heroCardsUrl}/${trainerId}`, updatedHeroCard);
   }
-  getHeroCardsByTrainerId() : Observable<HeroCard[]>   {   
-    return this.http.get<HeroCard[]>(`${this.heroCardsUrl}/byTrainerId/${this.TraindId}`);
+  getHeroCardsByTrainerId(id: string) : Observable<HeroCard[]>   {   
+    return this.http.get<HeroCard[]>(`${this.heroCardsUrl}/byTrainerId/${id}`);
   }    
   getHeroCardByName (heroName: string) : Observable<HeroCard> {
     return this.http.get<HeroCard>(`${this.heroCardsUrl}/ByHeroName/${heroName}`);

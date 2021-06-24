@@ -15,31 +15,30 @@ export class SeedDataService {
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  private heroTrainerUrl = environment.heroTrainerUrl;  
   private heroCardsUrls = environment.heroCardsUrl;
-  private id: string = '7d21479a-e2b9-b545-7031-03aec9c8f7bb'; //Guid.create().toString();
+  private id: string;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
   heroTrainer: HeroTrainer = {
     name: 'Willie',
-    id: this.id,
+    id: '',
     password: 'popoXima1!'
   }  
   heroCard1: HeroCard = {
     name: 'one',
     id: Guid.create().toString(),
-    myTrainerId: this.id,
+    myTrainerId: '',
     startingPower: 10,
     currentPower: 20,
     trainingSince: new Date(),
     ability: ability.Attacker,
-    suitColors: '#EB0A77'
+    suitColors: '#EB0A77, #2400A2, #ffff00, #00ff00'
   }
   heroCard2: HeroCard = {
     name: 'two',
     id: Guid.create().toString(),
-    myTrainerId: this.id,
+    myTrainerId: '',
     startingPower: 20,
     currentPower: 30,
     trainingSince: new Date(),
@@ -49,33 +48,31 @@ export class SeedDataService {
   heroCard3: HeroCard = {
     name: 'three',
     id: Guid.create().toString(),
-    myTrainerId: this.id,
+    myTrainerId: '',
     startingPower: 20,
     currentPower: 30,
     trainingSince: new Date(),
     ability: ability.Defender,
-    suitColors: '#2400A2'
+    suitColors: '#2400A2, #00A999'
   }
   heroCards: HeroCard[] = [
     this.heroCard1, this.heroCard2, this.heroCard3
   ];
   
-  seedHeroTrainer (): any
+  seedHerosAndTrainer (): void
   {    
-    console.log('seeding trainer - ',this.heroTrainer.name, this.heroTrainer.password)
-    this.authService.signup(this.heroTrainer.name, this.heroTrainer.password).subscribe(t => console.log(t));
+    this.authService.signup(this.heroTrainer.name, this.heroTrainer.password)
+    .subscribe(t => {
+      this.heroCards.forEach(hc => {
+        hc.myTrainerId = t.id;
+        this.seedHeroCard(hc).subscribe();
+      });
+    });
   }
-  seedHeroCard (heroCard: HeroCard): Observable<HeroCard> 
+
+  private seedHeroCard (heroCard: HeroCard): Observable<HeroCard> 
   {
     return this.http.post<HeroCard>(this.heroCardsUrls, heroCard, this.httpOptions);
-  }
-  seedHeroCards (): HeroCard[]
-  {
-    var heroCards: HeroCard[] = [];
-    this.heroCards.forEach(heroCard => {
-      this.seedHeroCard(heroCard).subscribe(h => heroCards.push(h))
-    })
-    return heroCards;
   }
 
 }

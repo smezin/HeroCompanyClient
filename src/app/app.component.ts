@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeroCard } from './entities/heroCard';
-import { HeroCardsDalService } from './services/hero-cards-dal.service';
+import { AuthService } from './services/auth.service';
 import { SeedDataService } from './services/seed-data.service';
 
 @Component({
@@ -13,10 +13,16 @@ export class AppComponent implements OnInit
   title = 'HeroCompany';
   heroCards: HeroCard[] = [];
 
-  constructor (private seedDataService: SeedDataService, private heroCardsDalService: HeroCardsDalService) {}
+  constructor (
+    private seedDataService: SeedDataService, 
+    private authService: AuthService) {}
+    
 
   ngOnInit(): void {
-    this.seedDataService.seedHeroCards();
-    this.seedDataService.seedHeroTrainer();    
+    this.seedDataService.seedHerosAndTrainer(); 
+    if (localStorage.getItem('user')) {
+      this.authService.user.next(JSON.parse(localStorage.getItem('user')));
+    }  
+    
   }
 }

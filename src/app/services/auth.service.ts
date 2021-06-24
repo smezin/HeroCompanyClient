@@ -50,15 +50,14 @@ export class AuthService {
       })
     )    
   }
-  getToken():string {
-    return this.user.value ? this.user.value.token : '';
-  }
+
   private handleAuthentication (name: string, id:string, token:string)  {
     const user = new User(
       id,
       name,
       token
     );
+    localStorage.setItem('user', JSON.stringify(user));
     this.user.next(user);
   }
 }

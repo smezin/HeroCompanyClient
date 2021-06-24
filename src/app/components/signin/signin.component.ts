@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
-export class SigninComponent implements OnInit {
+export class SigninComponent {
 
   @Input() username: string;
   @Input() password: string;
@@ -18,8 +18,6 @@ export class SigninComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) { }
 
-  ngOnInit(): void {  
-  }
   onSubmit(form: NgForm): void {
     if (!form.valid){
       return;

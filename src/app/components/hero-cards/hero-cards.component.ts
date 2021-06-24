@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HeroCard } from 'src/app/entities/heroCard';
 import { AuthService } from 'src/app/services/auth.service';
 import { HeroCardsDalService } from 'src/app/services/hero-cards-dal.service';
 import { TrainingService } from 'src/app/services/training.service';
@@ -12,6 +11,7 @@ import { TrainingService } from 'src/app/services/training.service';
 })
 export class HeroCardsComponent implements OnInit {
 
+
   constructor(
     public heroCardsDalService: HeroCardsDalService, 
     private authService: AuthService, 
@@ -19,12 +19,12 @@ export class HeroCardsComponent implements OnInit {
     private trainingService: TrainingService) { }
 
   ngOnInit(): void {
-    
     if (!this.authService.user.value || !this.authService.user.value.token) {     
-      this.router.navigate(['/signin']);     
+      this.router.navigate(['/signin']);   
+      return;  
     }
 
-    this.heroCardsDalService.getHeroCardsByTrainerId()
+    this.heroCardsDalService.getHeroCardsByTrainerId(this.authService.user.value.id)
       .subscribe(heroCards => {
         this.heroCardsDalService.setHeroCards(heroCards);
     } );

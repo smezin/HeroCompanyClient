@@ -11,7 +11,13 @@
             <p class="card-text">{{heroCard.name}} is {{heroCard.ability}}</p>
             <p class="card-text">starting power: {{heroCard.startingPower}} </p>
             <p class="card-text">current power: {{heroCard.currentPower}}</p>
-            <p class="card-text">suit colors: <span style="color: {{heroCard.suitColors}}">&#x25A0;</span> </p>
+            <p class="card-text">suit colors: 
+              <span 
+              *ngFor="let color of heroCard.suitColors.split(',')"
+              style="color: {{color}}"
+              style="font-size: 26px">
+                &#x272A;
+              </span> </p>
             <button (click)="onTrainHero(heroCard.id)" class="btn btn-primary">Train {{heroCard.name}}</button>
           </div>
         </div>

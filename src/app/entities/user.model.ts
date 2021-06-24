@@ -2,11 +2,6 @@ export class User {
     constructor(
         public id: string,
         public name: string,
-        private _token: string,
-        //private _tokenExpirationDate: Date
+        public token: string
     ) {}    
-
-    get token() {
-        return this._token
-    }
 }
