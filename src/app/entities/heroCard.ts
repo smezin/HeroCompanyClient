@@ -8,5 +8,6 @@ export interface HeroCard {
     trainingSince: Date,
     myTrainerId: string,
     ability?: ability,
-    suitColors: string
+    suitColors: string,
+    stamina?: number;
 }

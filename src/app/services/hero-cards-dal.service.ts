@@ -13,8 +13,6 @@ import { AuthService } from './auth.service';
 })
 export class HeroCardsDalService 
 {
-  heroCards: HeroCard[] = [];
-  
   constructor(
     private http: HttpClient, 
     private handleErrorService: HandleError, 
@@ -35,8 +33,4 @@ export class HeroCardsDalService
   getHeroCardById (heroName: string) : Observable<HeroCard> {
     return this.http.get<HeroCard>(`${this.heroCardsUrl}/ByHeroId/${heroName}`);
   }
-  setHeroCards(heroCards: HeroCard[]): void {
-    this.heroCards = heroCards
-  }  
-  
 }
