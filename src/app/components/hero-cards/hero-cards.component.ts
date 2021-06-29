@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { map, take } from 'rxjs/operators';
 import { HeroCard } from 'src/app/entities/heroCard';
 import { AuthService } from 'src/app/services/auth.service';
 import { HeroCardsDalService } from 'src/app/services/hero-cards-dal.service';
+import { TrainHeroService } from 'src/app/services/train-hero.service';
 
 @Component({
   selector: 'app-hero-cards',
@@ -11,19 +13,19 @@ import { HeroCardsDalService } from 'src/app/services/hero-cards-dal.service';
 })
 export class HeroCardsComponent implements OnInit {
   heroCards: HeroCard[] = [];
+  trainerId: string;
   constructor(
     public heroCardsDalService: HeroCardsDalService, 
-    private authService: AuthService, 
-    private router: Router) { }
+    private authService: AuthService,
+    private trainHeroService: TrainHeroService) { }
 
   ngOnInit(): void {
-    this.getCards();      
+    this.getCards();  
   }
-  onTrainHero (id: string) : void{
+  onTrainHero (id: string) : void {      
     this.heroCardsDalService.getHeroCardById(id).subscribe(hero => 
-      {
-        const newPower: number = +(hero.currentPower * (1 + Math.random()/10)).toFixed(2);
-        const updatedHeroCard : HeroCard = {...hero, currentPower: newPower, stamina: hero.stamina - 1}
+      {        
+        const updatedHeroCard : HeroCard = this.trainHeroService.trainHero(hero);
         this.heroCardsDalService.updateHeroCard(this.authService.user.value.id, updatedHeroCard).subscribe(); 
         const index = this.heroCards.findIndex(hc => hc.id === id);
         this.heroCards[index] = updatedHeroCard;  
@@ -32,15 +34,15 @@ export class HeroCardsComponent implements OnInit {
     );   
   }
 
-  private getCards () {
+  private getCards () : void {
     this.heroCardsDalService.getHeroCardsByTrainerId(this.authService.user.value.id)
     .subscribe(heroCards => {
-      this.heroCards = heroCards
+      this.heroCards = heroCards;
       this.sortHeroCards();
     });
   }
   //sort by current power, desending
-  private sortHeroCards() {
+  private sortHeroCards() : void {
     this.heroCards.sort((a, b) => {
       return +b.currentPower - +a.currentPower;
     });

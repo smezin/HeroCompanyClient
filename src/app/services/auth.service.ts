@@ -18,10 +18,13 @@ interface AuthResponseData {
 export class AuthService {
   user = new BehaviorSubject<User>(null);  
   
-  constructor(private http: HttpClient, private handleErrorService: HandleError) { }
+  constructor(
+    private http: HttpClient, 
+    private handleErrorService: HandleError) { }
+
   private heroTrainrUrl = environment.heroTrainerUrl;
 
-  signup (name: string, password: string) {
+  signup (name: string, password: string) : Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(this.heroTrainrUrl, {
       name: name,
       password: password
