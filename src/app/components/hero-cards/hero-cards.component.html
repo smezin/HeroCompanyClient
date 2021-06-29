@@ -18,7 +18,10 @@
               style="font-size: 26px">
                 &#x272A;
               </span> </p>
-            <button (click)="onTrainHero(heroCard.id)" class="btn btn-primary">Train {{heroCard.name}}</button>
+            <button (click)="onTrainHero(heroCard.id)" 
+            class="btn btn-primary"
+            [disabled]="!heroCard.stamina || heroCard.stamina < 0">
+            Train {{heroCard.name}}, {{heroCard.stamina}} Trainings left for today</button>
           </div>
         </div>
       </div>

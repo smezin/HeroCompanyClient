@@ -26,17 +26,17 @@ export class SeedDataService {
     password: 'popoXima1!'
   }  
   heroCard1: HeroCard = {
-    name: 'one',
+    name: 'Reef',
     id: Guid.create().toString(),
     myTrainerId: '',
     startingPower: 10,
-    currentPower: 20,
+    currentPower: 40,
     trainingSince: new Date(),
     ability: ability.Attacker,
     suitColors: '#EB0A77, #2400A2, #ffff00, #00ff00'
   }
   heroCard2: HeroCard = {
-    name: 'two',
+    name: 'Yam',
     id: Guid.create().toString(),
     myTrainerId: '',
     startingPower: 20,
@@ -46,11 +46,11 @@ export class SeedDataService {
     suitColors: '#00A999'
   }
   heroCard3: HeroCard = {
-    name: 'three',
+    name: 'Liat',
     id: Guid.create().toString(),
     myTrainerId: '',
     startingPower: 20,
-    currentPower: 30,
+    currentPower: 20,
     trainingSince: new Date(),
     ability: ability.Defender,
     suitColors: '#2400A2, #00A999'

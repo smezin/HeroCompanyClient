@@ -23,7 +23,7 @@ export class HeroCardsComponent implements OnInit {
     this.heroCardsDalService.getHeroCardById(id).subscribe(hero => 
       {
         const newPower: number = +(hero.currentPower * (1 + Math.random()/10)).toFixed(2);
-        const updatedHeroCard : HeroCard = {...hero, currentPower: newPower}
+        const updatedHeroCard : HeroCard = {...hero, currentPower: newPower, stamina: hero.stamina - 1}
         this.heroCardsDalService.updateHeroCard(this.authService.user.value.id, updatedHeroCard).subscribe(); 
         const index = this.heroCards.findIndex(hc => hc.id === id);
         this.heroCards[index] = updatedHeroCard;  
