@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { map, take } from 'rxjs/operators';
 import { HeroCard } from 'src/app/entities/heroCard';
 import { AuthService } from 'src/app/services/auth.service';
 import { HeroCardsDalService } from 'src/app/services/hero-cards-dal.service';
@@ -14,6 +12,7 @@ import { TrainHeroService } from 'src/app/services/train-hero.service';
 export class HeroCardsComponent implements OnInit {
   heroCards: HeroCard[] = [];
   trainerId: string;
+  
   constructor(
     public heroCardsDalService: HeroCardsDalService, 
     private authService: AuthService,

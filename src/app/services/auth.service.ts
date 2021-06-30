@@ -25,7 +25,7 @@ export class AuthService {
   private heroTrainrUrl = environment.heroTrainerUrl;
 
   signup (name: string, password: string) : Observable<AuthResponseData> {
-    return this.http.post<AuthResponseData>(this.heroTrainrUrl, {
+    return this.http.post<AuthResponseData>(`${this.heroTrainrUrl}/signup`, {
       name: name,
       password: password
     }).pipe(

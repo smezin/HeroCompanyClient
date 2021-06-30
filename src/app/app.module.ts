@@ -32,15 +32,20 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [
-    {
-      provide: ErrorHandler, 
-      useClass: HandleError
-    }, 
-    {
+  providers: [    
+  {
     provide : HTTP_INTERCEPTORS,
     useClass: AuthInterceptorService,
     multi   : true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HandleError,
+    multi: true
+  },
+  {
+    provide: ErrorHandler, 
+    useClass: HandleError
   }],
   bootstrap: [AppComponent]
 })

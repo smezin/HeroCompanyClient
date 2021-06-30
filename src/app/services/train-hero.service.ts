@@ -13,7 +13,10 @@ export class TrainHeroService {
     private authService: AuthService) { }
 
   trainHero (hero: HeroCard) : HeroCard {    
+    if (hero !== null && hero.stamina <= 0) {
+      return ({...hero, stamina: 0});
+    }
     const newPower: number = +(hero.currentPower * (1 + Math.random()/10)).toFixed(2);
-    return ({...hero, currentPower: newPower});
+    return ({...hero, currentPower: newPower, stamina: hero.stamina-1});
   }
 }
