@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HeroTrainer } from '../entities/heroTrainer';
 import { Guid } from "guid-typescript";
@@ -7,12 +7,13 @@ import { HeroCard } from '../entities/heroCard';
 import { Observable } from 'rxjs';
 import { ability } from '../entities/ability';
 import { AuthService } from './auth.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SeedDataService {
-
+export class SeedDataService  {
+  shouldSeed : boolean = true;
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   private heroCardsUrls = environment.heroCardsUrl;
@@ -61,6 +62,9 @@ export class SeedDataService {
   
   seedHerosAndTrainer (): void
   {    
+    if (!this.shouldSeed) {
+      return;
+    }
     this.authService.signup(this.heroTrainer.name, this.heroTrainer.password)
     .subscribe(t => {
       this.heroCards.forEach(hc => {

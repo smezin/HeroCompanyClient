@@ -17,6 +17,7 @@ interface AuthResponseData {
 })
 export class AuthService {
   user = new BehaviorSubject<User>(null);  
+  getUserStatus = this.user.asObservable();
   
   constructor(
     private http: HttpClient, 
@@ -38,7 +39,6 @@ export class AuthService {
       })
     )    
   }
-
   login (name: string, password: string) : Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(`${this.heroTrainrUrl}/login`, {
       name: name,
@@ -53,7 +53,10 @@ export class AuthService {
       })
     )    
   }
-
+  logout () {
+    localStorage.removeItem('user');
+    this.user.next(null);
+  }
   private handleAuthentication (name: string, id:string, token:string)  {
     const user = new User(
       id,

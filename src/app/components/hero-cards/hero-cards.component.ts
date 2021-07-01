@@ -19,22 +19,24 @@ export class HeroCardsComponent implements OnInit {
     private trainHeroService: TrainHeroService) { }
 
   ngOnInit(): void {
-    this.getCards();  
+    this.authService.getUserStatus.subscribe(user => {
+      this.trainerId = user.id;
+      this.getCards();
+    });
   }
   onTrainHero (id: string) : void {      
     this.heroCardsDalService.getHeroCardById(id).subscribe(hero => 
       {        
         const updatedHeroCard : HeroCard = this.trainHeroService.trainHero(hero);
-        this.heroCardsDalService.updateHeroCard(this.authService.user.value.id, updatedHeroCard).subscribe(); 
+        this.heroCardsDalService.updateHeroCard(this.trainerId, updatedHeroCard).subscribe(); 
         const index = this.heroCards.findIndex(hc => hc.id === id);
         this.heroCards[index] = updatedHeroCard;  
         this.sortHeroCards();          
       }
     );   
   }
-
   private getCards () : void {
-    this.heroCardsDalService.getHeroCardsByTrainerId(this.authService.user.value.id)
+    this.heroCardsDalService.getHeroCardsByTrainerId(this.trainerId)
     .subscribe(heroCards => {
       this.heroCards = heroCards;
       this.sortHeroCards();

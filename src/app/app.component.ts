@@ -18,11 +18,10 @@ export class AppComponent implements OnInit
     private authService: AuthService) {}
     
 
-  ngOnInit(): void {
-    this.seedDataService.seedHerosAndTrainer(); 
+  ngOnInit(): void {   
+    this.seedDataService.seedHerosAndTrainer();   
     if (localStorage.getItem('user')) {
       this.authService.user.next(JSON.parse(localStorage.getItem('user')));
     }  
-    
   }
 }
