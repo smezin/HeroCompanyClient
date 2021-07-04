@@ -17,7 +17,7 @@ export class SignupComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
-  
+  errorMessage: string;
   ngOnInit(): void {
   }
   onSubmit(form: NgForm): void {
@@ -26,15 +26,18 @@ export class SignupComponent implements OnInit {
     }
     const name = form.value.username;
     const password = form.value.password;
+    const rememberMe = form.value.rememberMe;
     this.isLoading = true;
-    this.authService.signup(name, password).subscribe(resData => {
+    this.authService.signup(name, password, rememberMe).subscribe(resData => {
       this.isLoading = false;
       this.router.navigate(['/myCards']);
     },
     error => {
-      console.log("error:", error);
+      this.errorMessage = error.error.title || error.error;
       this.isLoading = false;
-    });
-    //form.reset;
+      throw new Error(error);      
+      }
+    );
+    form.reset;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -17,22 +17,25 @@ export class SigninComponent {
   isLoading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { }
-
+  errorMessage: string;
   onSubmit(form: NgForm): void {
     if (!form.valid){
       return;
     }
     const name = form.value.username;
     const password = form.value.password;
+    const rememberMe = form.value.rememberMe;
     this.isLoading = true;
-    this.authService.login(name, password).subscribe(resData => {
+    this.authService.login(name, password, rememberMe).subscribe(resData => {
       this.isLoading = false;
       this.router.navigate(['/myCards']);
     },
     error => {
-      console.log("error:", error);
+      this.errorMessage = error.error.title || error.error;
       this.isLoading = false;
-    }
+      throw new Error (error)      
+      }
     );
+    form.reset;
   }
 }

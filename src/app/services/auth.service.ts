@@ -25,7 +25,7 @@ export class AuthService {
 
   private heroTrainrUrl = environment.heroTrainerUrl;
 
-  signup (name: string, password: string) : Observable<AuthResponseData> {
+  signup (name: string, password: string, rememberMe: boolean = true) : Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(`${this.heroTrainrUrl}/signup`, {
       name: name,
       password: password
@@ -34,12 +34,13 @@ export class AuthService {
         this.handleAuthentication(          
           resData.name, 
           resData.id, 
-          resData.token
+          resData.token,
+          rememberMe
         );
       })
     )    
   }
-  login (name: string, password: string) : Observable<AuthResponseData> {
+  login (name: string, password: string, rememberMe: boolean = true) : Observable<AuthResponseData> {
     return this.http.post<AuthResponseData>(`${this.heroTrainrUrl}/login`, {
       name: name,
       Password: password
@@ -48,7 +49,8 @@ export class AuthService {
         this.handleAuthentication(
           resData.name, 
           resData.id,           
-          resData.token
+          resData.token,
+          rememberMe
         );
       })
     )    
@@ -57,13 +59,18 @@ export class AuthService {
     localStorage.removeItem('user');
     this.user.next(null);
   }
-  private handleAuthentication (name: string, id:string, token:string)  {
+  private handleAuthentication (name: string, id:string, token:string, rememberMe: boolean)  {
     const user = new User(
       id,
       name,
       token
     );
-    localStorage.setItem('user', JSON.stringify(user));
+    if (rememberMe) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
+    }
+    
     this.user.next(user);
   }
 }
